@@ -66,7 +66,7 @@ print(list)
 # args: price list, import tax rate, discount, discount threshold
 total_price <- calculate_price(list, import_tax_rate, discount, discount_threshold)
 
-# call the calculate_shipping_cost
+# call the calculate_shipping_cost function 
 # args: number of items, cost of shipping the first item, cost of shipping 
 # subsequent items
 shipping_cost <- calculate_shipping_cost(num_items, cost_of_shipping_1st_item, cost_of_shipping_subseq_items)
