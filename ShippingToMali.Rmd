@@ -1,0 +1,82 @@
+---
+title: "Introduction to R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+# a function to calculate shipping cost, given the cost of shipping the first item
+# in the list, and the cost of shipping subsequent items
+calculate_shipping_cost <- function(num_items, first_item_cost, subsequent_items_cost) {
+  
+  shipping_cost_subsequent_items <- subsequent_items_cost * (num_items - 1)
+  
+  return(shipping_cost_subsequent_items + first_item_cost)
+}
+
+# a function to calculate the total price, given a list of prices, import 
+# tax, discount, and discounting threshold
+# 
+calculate_price <- function(price_list, import_tax, discount, discount_threshold) {
+  total_price <- 0
+  tax <- import_tax / 100
+  
+  for (price in price_list) {
+    price_plus_tax <- price + (price * tax)
+    total_price <- total_price + price_plus_tax
+  }
+  
+  if (total_price > discount_threshold) {
+    total_price <- total_price - discount
+  }
+  
+  return(total_price)
+}
+
+# get input, we'll use these as arguments to our functions
+num_items <- readline(prompt="Enter total number of items: ")
+cost_of_shipping_1st_item <- readline(prompt="Cost of shipping 1st item: ")
+cost_of_shipping_subseq_items <- readline(prompt="Cost of shipping subsequent items: ")
+price_list <- readline(prompt="Price list, separated by commas: ")
+import_tax_rate <- readline(prompt="% import tax: ")
+discount <- readline(prompt="Discount: ")
+discount_threshold <- readline(prompt="Discount threshold: ")
+
+# convert user input into appropriate data types
+num_items <- as.integer(num_items)
+cost_of_shipping_1st_item <- as.integer(cost_of_shipping_1st_item)
+cost_of_shipping_subseq_items <- as.integer(cost_of_shipping_subseq_items)
+import_tax_rate <- as.integer(import_tax_rate)
+discount <- as.integer(discount)
+discount_threshold <- as.integer(discount_threshold)
+# convert the list of prices to a numeric vector
+list <- as.numeric(unlist(strsplit(price_list, ",")))
+
+# print the user input
+cat("Total number of items: ", num_items, '\n')
+cat("Cost of shipping 1st item: ", cost_of_shipping_1st_item, '\n')
+cat("Cost of shipping subsequent items: ", cost_of_shipping_subseq_items, '\n')
+cat("Import tax rate: ", import_tax_rate, '\n')
+cat("Discount amount: ", discount, '\n')
+cat("Discount threshold: ", discount_threshold, '\n')
+cat("Price list", "\n")
+print(list)
+
+# call calculate_price function
+# args: price list, import tax rate, discount, discount threshold
+total_price <- calculate_price(list, import_tax_rate, discount, discount_threshold)
+
+# call the calculate_shipping_cost
+# args: number of items, cost of shipping the first item, cost of shipping 
+# subsequent items
+shipping_cost <- calculate_shipping_cost(num_items, cost_of_shipping_1st_item, cost_of_shipping_subseq_items)
+
+# get total cost
+total_cost <- total_price + shipping_cost
+
+# print the total taxed price, shipping cost and the total cost
+cat("Price plus Tax: ", total_price, "\n")
+cat("Shipping Cost: ", shipping_cost, "\n")
+cat("Total Cost: ", total_cost, "\n")  
+
+```
